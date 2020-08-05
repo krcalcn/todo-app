@@ -1,22 +1,18 @@
 <template>
   <q-page padding>
    <q-list bordered separator>
-      <q-item clickable v-ripple v-for="task in tasks" v-bind:key="task.id">
-        <q-item-section>
-          <q-item-label>{{task.name}}</q-item-label>
-          <q-item-label caption>
-            {{task.dueDate}}
-          </q-item-label>
-          <q-item-label caption>
-            {{task.dueTime}}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
+      <task
+      v-for="(task, index) in tasks"
+      v-bind:key="task.id"
+      :task="task"
+      :index="index">
+      </task>
    </q-list>
   </q-page>
 </template>
 
 <script>
+import Task from 'components/Task';
 
 export default {
   data() {
@@ -47,6 +43,9 @@ export default {
     completeTask(a) {
       console.log(a);
     },
+  },
+  components: {
+    task: Task,
   },
 };
 </script>
