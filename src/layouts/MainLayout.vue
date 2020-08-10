@@ -19,6 +19,18 @@
       </q-toolbar>
     </q-header>
 
+    <q-footer elavated>
+      <q-tabs>
+        <q-route-tab
+        to="/"
+        icon="list"
+        label="Todo" />
+        <q-route-tab
+        to="/settings"
+        icon="settings"
+        label="Settings" />
+      </q-tabs>
+    </q-footer>
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
@@ -30,13 +42,30 @@
           header
           class="text-grey-8"
         >
-          Essential Links
+          Navigation
         </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item
+          to="/"
+          exact
+          clickable>
+          <q-item-section avatar>
+            <q-icon name="list" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Todo</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          to="/settings"
+          exact
+          clickable>
+          <q-item-section avatar>
+            <q-icon name="settings" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Settings</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -47,30 +76,12 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue';
-
-const linksData = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-];
 
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
   data() {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData,
     };
   },
 };
