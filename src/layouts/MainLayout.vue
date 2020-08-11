@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -11,59 +11,48 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-toolbar-title>
+        <q-toolbar-title class="absolute-center">
+        <q-icon name="assignment" />
           To-Do App
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
     <q-footer elavated>
       <q-tabs>
         <q-route-tab
-        to="/"
-        icon="list"
-        label="Todo" />
-        <q-route-tab
-        to="/settings"
-        icon="settings"
-        label="Settings" />
+        v-for="(item, index) in navs"
+        :key="index"
+        :to="item.to"
+        :icon="item.icon"
+        :label="item.label" />
       </q-tabs>
     </q-footer>
     <q-drawer
       v-model="leftDrawerOpen"
+      :breakpoint="767"
+      :width="250"
       show-if-above
       bordered
-      content-class="bg-grey-1"
+      content-class="bg-primary"
     >
-      <q-list>
+      <q-list dark>
         <q-item-label
-          header
-          class="text-grey-8"
-        >
+          header>
           Navigation
         </q-item-label>
         <q-item
-          to="/"
+          v-for="(item, index) in navs"
+          :key="index"
+          :to="item.to"
+          class="text-grey-5"
           exact
           clickable>
           <q-item-section avatar>
-            <q-icon name="list" />
+            <q-icon :name="item.icon" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Todo</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          to="/settings"
-          exact
-          clickable>
-          <q-item-section avatar>
-            <q-icon name="settings" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Settings</q-item-label>
+            <q-item-label>{{ item.label}}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -82,7 +71,32 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
+      navs: [
+        {
+          label: 'Todo',
+          icon: 'list',
+          to: '/',
+        },
+        {
+          label: 'Settings',
+          icon: 'settings',
+          to: '/settings',
+        },
+      ],
     };
   },
 };
 </script>
+
+<style lang="scss">
+  @media screen and (min-width: 768px){
+    .q-footer{
+      display: none;
+    }
+  }
+  .q-drawer {
+    .q-router-link--exact-active{
+    color: #fff !important;
+    }
+  }
+</style>
