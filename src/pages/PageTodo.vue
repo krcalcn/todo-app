@@ -2,10 +2,10 @@
   <q-page padding>
    <q-list bordered separator>
       <task
-      v-for="(task, index) in tasks"
-      v-bind:key="task.id"
+      v-for="(task, key) in tasks"
+      v-bind:key="key"
       :task="task"
-      :index="index">
+      :id="key">
       </task>
    </q-list>
   </q-page>
@@ -13,39 +13,21 @@
 
 <script>
 import Task from 'components/Task';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
-      tasks: [
-        {
-          id: 1,
-          name: 'Go to shop',
-          dueDate: '11/08/2020',
-          dueTime: '10:00',
-        },
-        {
-          id: 2,
-          name: 'Get bananas',
-          dueDate: '12/08/2020',
-          dueTime: '11:00',
-        },
-        {
-          id: 3,
-          name: 'Get apples',
-          dueDate: '13/08/2020',
-          dueTime: '14:30',
-        },
-      ],
+
     };
   },
   methods: {
-    completeTask(a) {
-      console.log(a);
-    },
   },
   components: {
     task: Task,
+  },
+  computed: {
+    ...mapGetters('tasks', ['tasks']),
   },
 };
 </script>
