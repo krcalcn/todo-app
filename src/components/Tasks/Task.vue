@@ -18,7 +18,10 @@
           size="18px"/>
       </q-item-label>
     </q-item-section>
-    <q-item-section side top>
+    <q-item-section
+      v-if="task.dueDate"
+      side
+      top>
     <div class="row">
       <q-icon
       name="event"
@@ -59,8 +62,8 @@ export default {
     ...mapActions('tasks', ['updateTask', 'deleteTask']),
     promptToDelete(id) {
       this.$q.dialog({
-        title: 'confirm',
-        message: 'Do you really want to delete this task',
+        title: 'Confirm To Delete',
+        message: 'Do you really want to delete this task?',
         ok: {
           push: true,
         },
