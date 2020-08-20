@@ -19,7 +19,7 @@ const state = {
       name: 'Get apples',
       dueDate: '13/08/2020',
       dueTime: '14:30',
-      completed: true,
+      completed: false,
     },
   },
 };
@@ -55,7 +55,26 @@ const actions = {
 };
 
 const getters = {
-  tasks: (s) => s.tasks,
+  tasksTodo: (s) => {
+    const tasks = {};
+    Object.keys(s.tasks).forEach((key) => {
+      const task = s.tasks[key];
+      if (!task.completed) {
+        tasks[key] = task;
+      }
+    });
+    return tasks;
+  },
+  tasksCompleted: (s) => {
+    const tasks = {};
+    Object.keys(s.tasks).forEach((key) => {
+      const task = s.tasks[key];
+      if (task.completed) {
+        tasks[key] = task;
+      }
+    });
+    return tasks;
+  },
 };
 
 export default {

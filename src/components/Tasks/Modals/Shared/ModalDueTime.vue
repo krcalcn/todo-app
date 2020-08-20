@@ -5,7 +5,8 @@
         outlined
         :value="dueTime"
         @input="$emit('update:dueTime', $event)"
-        label="Due Time">
+        label="Due Time"
+        clearable>
         <template v-slot:append>
           <q-icon name="access_time" class="cursor-pointer">
             <q-popup-proxy ref="qTimeProxy"  transition-show="scale" transition-hide="scale">
