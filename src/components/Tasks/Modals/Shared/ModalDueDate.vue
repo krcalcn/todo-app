@@ -8,8 +8,13 @@
       clearable>
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+          <q-popup-proxy
+            ref="qDateProxy"
+            mask="DD/MM/YYYY"
+            ransition-show="scale"
+            transition-hide="scale">
             <q-date
+              years-in-month-view
               :value="dueDate"
               @input="(e) => {
                 $emit('update:dueDate', e);

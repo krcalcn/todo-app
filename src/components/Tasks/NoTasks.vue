@@ -4,9 +4,13 @@
       <template v-slot:avatar>
         <q-icon name="done" color="primary"/>
       </template>
-      All done
+        There's No Tasks To Do Today
       <template v-slot:action>
-        <q-btn flat color="primary" label="Add Todo" />
+        <q-btn
+        flat
+        color="primary"
+        label="Add Todo"
+        @click="$emit('showaddtask')"/>
       </template>
     </q-banner>
   </div>

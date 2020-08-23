@@ -1,13 +1,22 @@
 <template>
   <q-page padding>
     <div class="row">
-
+        <search />
+        <sort/>
+      <p
+        v-if="search && !Object.keys(tasksTodo).length && !Object.keys(tasksCompleted).length">
+          No search results.
+        </p>
+      <no-tasks
+        v-if="!Object.keys(tasksTodo).length && !search"
+        @showaddtask="showAddTask = true"/>
       <tasks-todo
         :tasksTodo="tasksTodo"
-        @showaddtask="showAddTask = true"/>
+        v-if="Object.keys(tasksTodo).length"/>
 
       <tasks-completed
-        :tasksCompleted="tasksCompleted"/>
+        :tasksCompleted="tasksCompleted"
+        v-if="Object.keys(tasksCompleted).length"/>
 
       <div class="absolute-bottom text-center q-mb-lg">
         <q-btn
@@ -28,9 +37,12 @@
 
 <script>
 import AddTask from 'components/Tasks/Modals/AddTask';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import TasksTodoVue from 'src/components/Tasks/TasksTodo.vue';
-import TasksCompletedVue from 'src/components/TasksCompleted.vue';
+import TasksCompletedVue from 'src/components/Tasks/TasksCompleted.vue';
+import SearchVue from 'src/components/Tasks/Tools/Search.vue';
+import NoTasksVue from 'src/components/Tasks/NoTasks.vue';
+import SortVue from 'src/components/Tasks/Tools/Sort.vue';
 
 export default {
   data() {
@@ -44,9 +56,13 @@ export default {
     'add-task': AddTask,
     'tasks-todo': TasksTodoVue,
     'tasks-completed': TasksCompletedVue,
+    'no-tasks': NoTasksVue,
+    search: SearchVue,
+    sort: SortVue,
   },
   computed: {
     ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
+    ...mapState('tasks', ['search']),
   },
 };
 </script>

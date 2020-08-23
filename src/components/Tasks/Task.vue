@@ -10,12 +10,11 @@
         class="no-pointer-events"/>
     </q-item-section>
     <q-item-section>
-      <q-item-label>
-        {{task.name}}
-        <q-icon
+      <q-item-label><q-icon
           name="done"
           v-if="task.completed"
           size="18px"/>
+        {{task.name}}
       </q-item-label>
     </q-item-section>
     <q-item-section

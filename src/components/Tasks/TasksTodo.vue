@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-6 col-xs-12">
+  <div class="col-12">
     <list-header bgColor="bg-orange-5">Todos</list-header>
     <q-list
       bordered
@@ -10,18 +10,6 @@
         v-bind:key="key"
         :task="task"
         :id="key" />
-
-        <q-item v-if="!Object.keys(tasksTodo).length" class="bg-orange-2">
-        <q-item-section>There's No Tasks To Do Today</q-item-section>
-        <q-item-section side>
-           <q-btn
-           color="primary"
-           icon="add"
-           text-color="white"
-           label="Add Todo"
-           @click="$emit('showaddtask')" />
-        </q-item-section>
-        </q-item>
     </q-list>
   </div>
 </template>

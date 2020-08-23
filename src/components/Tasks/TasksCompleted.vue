@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-6 col-xs-12" :class="$q.screen.width > 1024 ? '' : 'q-mt-lg'">
+  <div class="col-12 q-mt-lg" :class="$q.screen.width > 1024 ? '' : 'q-mt-lg'">
 
     <list-header bgColor="bg-green-5">Completed</list-header>
 
@@ -17,8 +17,8 @@
   </div>
 </template>
 <script>
-import TaskVue from './Tasks/Task.vue';
-import ListHeaderVue from './Tasks/Modals/Shared/ListHeader.vue';
+import TaskVue from './Task.vue';
+import ListHeaderVue from './Modals/Shared/ListHeader.vue';
 
 export default {
   props: ['tasksCompleted'],
