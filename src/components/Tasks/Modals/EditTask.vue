@@ -26,18 +26,15 @@
 </template>
 <script>
 import { mapActions } from 'vuex';
-import ModalHeaderVue from './Shared/ModalHeader.vue';
-import ModalTaskNameVue from './Shared/ModalTaskName.vue';
-import ModalDueDateVue from './Shared/ModalDueDate.vue';
-import ModalDueTimeVue from './Shared/ModalDueTime.vue';
-import ModalButtonsVue from './Shared/ModalButtons.vue';
+import mixinAddEditTask from 'src/mixins/mixin-add-edit-task';
 
 export default {
+  mixins: [mixinAddEditTask],
   props: ['task', 'id'],
   data() {
     return {
       taskToSubmit: {
-        name: 'test',
+        name: '',
         dueDate: '',
         dueTime: '',
         completed: false,
@@ -46,12 +43,6 @@ export default {
   },
   methods: {
     ...mapActions('tasks', ['updateTask']),
-    submitForm() {
-      this.$refs.modalTaskName.$refs.name.validate();
-      if (!this.$refs.modalTaskName.$refs.name.hasError) {
-        this.submitTask();
-      }
-    },
     submitTask() {
       this.updateTask({
         id: this.id,
@@ -60,16 +51,8 @@ export default {
       this.$emit('close');
     },
   },
-  components: {
-    'modal-header': ModalHeaderVue,
-    'modal-task-name': ModalTaskNameVue,
-    'modal-due-date': ModalDueDateVue,
-    'modal-due-time': ModalDueTimeVue,
-    'modal-buttons': ModalButtonsVue,
-  },
   mounted() {
     this.taskToSubmit = { ...this.task };
-    // console.log(Object.assign(this.task), this.task);
   },
 };
 </script>

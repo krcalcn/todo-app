@@ -3,18 +3,21 @@
   clickable
   v-ripple
   @click="updateTask({ id: id, updates: {completed: !task.completed}})"
-  :class="!task.completed ? 'bg-orange-2' : 'bg-green-3'">
+  :class="!task.completed ? 'bg-orange-2' : 'bg-green-3'"
+  v-touch-hold:1000.mouse="showEditTaskModal">
     <q-item-section side top>
       <q-checkbox
         :value="task.completed"
         class="no-pointer-events"/>
     </q-item-section>
     <q-item-section>
-      <q-item-label><q-icon
+      <q-item-label
+        v-html="$options.filters.searchHighlight(task.name, search)">
+        <q-icon
           name="done"
           v-if="task.completed"
           size="18px"/>
-        {{task.name}}
+        {{task.name | searchHighlight(search)}}
       </q-item-label>
     </q-item-section>
     <q-item-section
@@ -30,7 +33,7 @@
         <div class="row justify-end">
           <q-item-label
             caption>
-            {{task.dueDate}}
+            {{task.dueDate | dateFormatChange}}
           </q-item-label>
         </div>
         <div class="row justify-end">
@@ -68,7 +71,8 @@
   </q-item>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import { date } from 'quasar';
 import EditTaskVue from './Modals/EditTask.vue';
 
 export default {
@@ -93,6 +97,24 @@ export default {
         persistent: true,
       }).onOk(() => { this.deleteTask(id); });
     },
+    showEditTaskModal() {
+      this.showEditTask = true;
+    },
+  },
+  filters: {
+    dateFormatChange(value) {
+      return date.formatDate(value, 'Do MMMM');
+    },
+    searchHighlight(value, search) {
+      if (search) {
+        const searchRegExp = new RegExp(search, 'i');
+        return value.replace(searchRegExp, (match) => `<span class="bg-yellow-6">${match}</span>`);
+      }
+      return value;
+    },
+  },
+  computed: {
+    ...mapState('tasks', ['search']),
   },
   components: {
     'edit-task': EditTaskVue,

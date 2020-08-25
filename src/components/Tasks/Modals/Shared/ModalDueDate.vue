@@ -10,7 +10,6 @@
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy
             ref="qDateProxy"
-            mask="DD/MM/YYYY"
             ransition-show="scale"
             transition-hide="scale">
             <q-date
