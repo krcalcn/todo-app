@@ -18,9 +18,10 @@
         :tasksCompleted="tasksCompleted"
         v-if="Object.keys(tasksCompleted).length"/>
 
-      <div class="absolute-bottom text-center q-mb-lg">
+      <div class="absolute-bottom text-center q-mb-lg no-pointer-events">
         <q-btn
           @click="showAddTask = true"
+          class="all-pointer-events"
           round
           color="primary"
           size="24px"
