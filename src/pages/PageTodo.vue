@@ -8,7 +8,7 @@
           No search results.
         </p>
       <no-tasks
-        v-if="!Object.keys(tasksTodo).length && !search"
+        v-if="!Object.keys(tasksTodo).length && !search && !settings.showTasksInOneList"
         @showaddtask="showAddTask = true"/>
       <tasks-todo
         :tasksTodo="tasksTodo"
@@ -63,6 +63,7 @@ export default {
   },
   computed: {
     ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
+    ...mapGetters('settings', ['settings']),
     ...mapState('tasks', ['search']),
   },
 };
