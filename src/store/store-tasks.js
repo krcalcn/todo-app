@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import { uid } from 'quasar';
 import { firebaseDb, firebaseAuth } from 'boot/firebase';
+import { showErrorMessage } from 'src/functions/function-show-error-message';
 
 const state = {
   tasks: {
   },
   search: '',
   sort: 'dueDate',
+  tasksDownloaded: false,
 };
 
 const mutations = {
@@ -20,11 +22,17 @@ const mutations = {
   addTask(s, payload) {
     Vue.set(s.tasks, payload.id, payload.task);
   },
+  clearTasks(s) {
+    s.tasks = {};
+  },
   setSearch(s, value) {
     s.search = value;
   },
   setSort(s, value) {
     s.sort = value;
+  },
+  setTasksDownloaded(s, value) {
+    s.tasksDownloaded = value;
   },
 };
 
@@ -52,6 +60,12 @@ const actions = {
   fbReadData({ commit }) {
     const userId = firebaseAuth.currentUser.uid;
     const userTasks = firebaseDb.ref(`tasks/${userId}`);
+
+    userTasks.once('value', () => {
+      commit('setTasksDownloaded', true);
+    }, (error) => {
+      showErrorMessage(error.message);
+    });
 
     userTasks.on('child_added', (snapshot) => {
       const taskk = snapshot.val();

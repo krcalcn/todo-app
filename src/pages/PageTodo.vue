@@ -1,6 +1,7 @@
 <template>
   <q-page padding>
-    <div class="row">
+    <template v-if="tasksDownloaded">
+      <div class="row">
         <search />
         <sort/>
       <p
@@ -33,6 +34,13 @@
 
       </q-dialog>
     </div>
+    </template>
+
+    <template v-else>
+      <div class="absolute-center">
+        <q-spinner color="primary" size="4em" />
+      </div>
+    </template>
   </q-page>
 </template>
 
@@ -64,7 +72,7 @@ export default {
   computed: {
     ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
     ...mapGetters('settings', ['settings']),
-    ...mapState('tasks', ['search']),
+    ...mapState('tasks', ['search', 'tasksDownloaded']),
   },
 };
 </script>
