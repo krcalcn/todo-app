@@ -19,6 +19,10 @@ const routes = [
         path: '/test',
         component: () => import('pages/Index2.vue'),
       },
+      {
+        path: '/auth',
+        component: () => import('pages/PageAuth.vue'),
+      },
     ],
   },
 

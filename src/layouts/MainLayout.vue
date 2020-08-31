@@ -15,6 +15,22 @@
         <q-icon name="assignment" />
           To-Do App
         </q-toolbar-title>
+
+         <q-btn
+          v-if="!loggedIn"
+          to="/auth"
+          flat
+          icon-right="account_circle"
+          label="login"
+          class="absolute-right"/>
+          <q-btn
+          v-else
+          @click="logOutUser"
+          flat
+          icon-right="account_circle"
+          label="Logout"
+          class="absolute-right"/>
+
       </q-toolbar>
     </q-header>
 
@@ -22,6 +38,7 @@
       <q-tabs>
         <q-route-tab
         v-for="(item, index) in navs"
+        :class="!loggedIn?'text-grey-5':''"
         :key="index"
         :to="item.to"
         :icon="item.icon"
@@ -45,7 +62,7 @@
           v-for="(item, index) in navs"
           :key="index"
           :to="item.to"
-          class="text-grey-5"
+          :class="!loggedIn?'text-grey-5':'text-grey-4'"
           exact
           clickable>
           <q-item-section avatar>
@@ -65,6 +82,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'MainLayout',
@@ -84,6 +102,12 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapState('auth', ['loggedIn']),
+  },
+  methods: {
+    ...mapActions('auth', ['logOutUser']),
   },
 };
 </script>
